@@ -12,10 +12,12 @@ static NSString *canIHazRandomQuotePl0x() {
 	
 	sqlite3_stmt *statement = NULL;
 	
-	int zReturn = sqlite3_prepare_v2(quoteDatabase, "select count(quote) from quotes;", -1, &statement, NULL);
+	sqlite3_prepare_v2(quoteDatabase, "select count(quote) from quotes;", -1, &statement, NULL);
 	
-	if (!statement)
-		return [NSString stringWithFormat:@"Error2 - %i", zReturn];
+	if (!statement) {
+		sqlite3_close(quoteDatabase);
+		return @"Error2";
+	}
 
 	int count = 0;
 	
@@ -27,15 +29,19 @@ static NSString *canIHazRandomQuotePl0x() {
 	
 	int where = arc4random() % count;
 	
-	if (sqlite3_finalize(statement) != SQLITE_OK)
+	if (sqlite3_finalize(statement) != SQLITE_OK) {
+		sqlite3_close(quoteDatabase);
 		return @"Error3";
+	}
 	
 	statement = NULL;
 	
 	sqlite3_prepare_v2(quoteDatabase, [[NSString stringWithFormat:@"select quote from quotes where id = %i;", where] UTF8String] , -1, &statement, NULL);
 	
-	if (!statement)
+	if (!statement) {
+		sqlite3_close(quoteDatabase);
 		return @"Error4";
+	}
 	
 	NSString *zQuote = nil;
 	
