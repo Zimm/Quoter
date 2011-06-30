@@ -1,7 +1,7 @@
 Package: com.thezimm.quoter
 Depends: mobilesubstrate
 Name: Quoter
-Version: 0.1
+Version: 0.1.1
 Architecture: iphoneos-arm
 Description: A nice quote once a day every day!
 Author: Dan Zimmerman <daniel.zimmerman@me.com>
