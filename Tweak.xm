@@ -108,7 +108,7 @@ static void pl0xAlert() {
 
 %hook SBAwayController
 
--(void)unlockWithSound:(BOOL)sound
+-(void)_unlockWithSound:(BOOL)sound isAutoUnlock:(BOOL)unlock
 {
 	%orig;
 	
